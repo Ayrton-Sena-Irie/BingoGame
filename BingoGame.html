@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BingoGame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #number-display {
+            font-size: 72px;
+            margin: 20px;
+        }
+        #history {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="number-display">--</div>
+    <button type="button" onclick="drawNumber()">
+        抽選
+      </button>
+    <div>
+        <h2>履歴</h2>
+        <div id="history"></div>
+    </div>
+    <script>
+        let data = Array.from({ length: 75 }, (_, i) => i + 1);
+        let history=[];
+        document.getElementById('draw-button').addEventListener('click', drawNumber);
+        
+        function drawNumber() {
+            if (data.length === 0) {
+                alert('すべての番号が引かれました。');
+                return;
+            }
+
+            // ランダムに番号を選ぶ
+            const randomIndex = Math.floor(Math.random() * data.length);
+            const drawnNumber = data[randomIndex];
+            // 選んだ番号を履歴に追加
+            history.push(drawnNumber);
+            data.splice(randomIndex, 1); // 配列から引いた番号を削除
+
+            // 選んだ番号を画面に表示
+            document.getElementById('number-display').textContent = drawnNumber;
+
+            // 履歴を更新
+            updateHistory();
+        }
+        function updateHistory() {
+            const historyDiv = document.getElementById('history');
+            historyDiv.innerHTML = history.join(', ');
+        }
+
+        
+    </script>
+</body>
+</html>
